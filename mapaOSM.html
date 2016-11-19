@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Mapa con OpenStreetMap OSM</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" 
+	   src="ol2/OpenLayers.js"></script>
+	<style type="text/css">
+		body {
+			height: 100%;
+			width: 100%;
+		}
+		#map {
+			height: 700px;
+			width: 700px;
+			z-index: 99;
+		}
+	</style>
+<script type="text/javascript">
+var inicio = function () {
+	
+	OpenLayers.IMAGE_RELOAD_ATTEMPTS = 0;
+	OpenLayers.DOTS_PER_INCH = 90.71428571428572;
+	OpenLayers.Util.onImageLoadErrorColor='transparent';
+	
+// para webservices con WSM WFM
+//	OpenLayers.ProxHost = "cgi-bin/proxy.cgi?url=";
+
+   var map;
+   var opciones;
+   var proyeccion,resolucion, 
+       zoom, controlNavegacion, controlZoom;
+   // EPSG:4326 (LatinoAmerica) EPSG:900913
+   proyeccion = new OpenLayers.Projection("EPSG:4326");
+   resolucion = 196543.0339;
+   zoom = 20;  // es de 0 hasta 22 max
+   controlNavegacion = new OpenLayers.Control.Navigation();
+   controlTouch = new OpenLayers.Control.TouchNavigation(
+     {dragPanOptions:{enableKinetic:true}}
+   	);
+   controlZoom = new OpenLayers.Control.Zoom();
+
+   opciones = {
+   	  units: 'm', 
+   	  projection: proyeccion,
+   	  maxResolution: resolucion,
+   	  numZoomLevels: zoom,
+   	  controls: [
+   	  	controlTouch, controlNavegacion, controlZoom
+   	  ]
+   };
+   // maxExtent: bounds
+   map = new OpenLayers.Map('map',opciones);
+
+   var OSM = new OpenLayers.Layer.OSM();
+
+   map.addLayer(OSM);
+
+}
+window.onload = inicio;
+</script>
+</head>
+<body >
+<div id="map"></div>
+</body>
+</html>
