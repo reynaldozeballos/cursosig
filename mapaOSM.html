@@ -50,12 +50,22 @@ var inicio = function () {
    	  ]
    };
    // maxExtent: bounds
-   map = new OpenLayers.Map('map',opciones);
+
+   //BoundingBox => 4 ptos que marcan una region
+    map = new OpenLayers.Map('map',opciones);
 
    var OSM = new OpenLayers.Layer.OSM();
 
    map.addLayer(OSM);
 
+   var region = new OpenLayers.Bounds(-8882307.87997250073, -2714472.11172039993, -5319651.24140710011, -1132560.70255260007);
+   map.setCenter(region.getCenterLonLat().transform(
+      new OpenLayers.Projection("EPSG:900913"),
+      map.getProjectionObject()),6
+   );
+   // Zoom 6 = normal
+   // Zoom 12 = mas cerca
+   
 }
 window.onload = inicio;
 </script>
